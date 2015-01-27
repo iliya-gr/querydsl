@@ -11,7 +11,7 @@ import com.querydsl.core.support.Expressions;
 import com.querydsl.core.support.ReplaceVisitor;
 import com.querydsl.core.types.*;
 
-class JPAMapAccessVisitor extends ReplaceVisitor {
+class JPAMapAccessVisitor extends ReplaceVisitor<Void> {
 
     private final QueryMetadata metadata;
 
@@ -23,7 +23,7 @@ class JPAMapAccessVisitor extends ReplaceVisitor {
 
     public Expression<?> visit(Path<?> expr, @Nullable Void context) {
         expr = (Path<?>) super.visit(expr, null);
-        PathMetadata pathMetadata = expr.getMetadata();
+        PathMetadata<?> pathMetadata = expr.getMetadata();
         if (pathMetadata.getPathType() == PathType.MAPVALUE
          || pathMetadata.getPathType() == PathType.MAPVALUE_CONSTANT) {
             Path<?> replacement = replacements.get(expr);
